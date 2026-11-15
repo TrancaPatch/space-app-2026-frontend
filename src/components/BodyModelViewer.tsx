@@ -853,11 +853,11 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
           onChange={(e) => handleModelChange(e.target.value as ModelMode)}
           aria-label="Seleccionar modelo anatómico"
         >
-          <option value="cuerpo-holografico">🧍 Cuerpo Holográfico</option>
-          <option value="esqueleto">💀 Esqueleto (135 Huesos)</option>
-          <option value="cardiovascular">🫀 Sistema Cardiovascular (33 Vasos)</option>
-          <option value="nervioso">🧠 Sistema Nervioso Central (5 Estructuras)</option>
-          <option value="organos">🫁 Órganos Internos (4 Sistemas)</option>
+          <option value="cuerpo-holografico"> Cuerpo Holográfico</option>
+          <option value="esqueleto">💀 Esqueleto</option>
+          <option value="cardiovascular">🫀 Sistema Cardiovascular</option>
+          <option value="nervioso">🧠 Sistema Nervioso Central</option>
+          <option value="organos">🫁 Órganos Internos</option>
         </select>
 
         <button
@@ -866,7 +866,7 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
           onClick={resetCamera}
           title="Restablecer vista general"
         >
-          🧍 Vista General
+           Vista General
         </button>
       </div>
 

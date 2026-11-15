@@ -206,11 +206,10 @@ export function HistorialPage() {
             <div className="history-box-card">
               <div className="history-box-header">
                 <div className="box-title-group">
-                  <span>👥</span>
                   <span>Antecedentes familiares</span>
                 </div>
                 <span className="box-edit-icon" title="Editar antecedentes familiares">
-                  ✏️
+                  
                 </span>
               </div>
               <ul className="history-bullets-list">
@@ -227,11 +226,10 @@ export function HistorialPage() {
             <div className="history-box-card">
               <div className="history-box-header">
                 <div className="box-title-group">
-                  <span>👤</span>
                   <span>Antecedentes personales</span>
                 </div>
                 <span className="box-edit-icon" title="Editar antecedentes personales">
-                  ✏️
+                  
                 </span>
               </div>
               <ul className="history-bullets-list">
@@ -247,13 +245,11 @@ export function HistorialPage() {
             {/* Detalle del chequeo seleccionado */}
             <div className="checkup-detail-card">
               <div className="detail-card-header">
-                <span>🩺</span>
                 <span>Detalle chequeo</span>
               </div>
 
               <div className="detail-items-list">
                 <div className="detail-line">
-                  <span className="detail-line-icon">📅</span>
                   <div>
                     <span className="detail-label">Fecha: </span>
                     <span className="detail-val">{selectedCheckup.date}</span>
@@ -261,7 +257,6 @@ export function HistorialPage() {
                 </div>
 
                 <div className="detail-line">
-                  <span className="detail-line-icon">🛡️</span>
                   <div>
                     <span className="detail-label">Área: </span>
                     <span className="detail-val">{selectedCheckup.area}</span>
@@ -270,7 +265,6 @@ export function HistorialPage() {
 
                 <div className="detail-line" style={{ flexDirection: 'column', gap: '4px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span className="detail-line-icon">📝</span>
                     <span className="detail-label">Descripción:</span>
                   </div>
                   <div className="detail-desc-box">
