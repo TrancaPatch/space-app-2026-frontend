@@ -168,9 +168,9 @@ export interface SkeletonPartConfig {
 }
 
 export const DEFAULT_SKELETON_VIEW = {
-  cameraTarget: '0m 0.95m 0m',
-  cameraOrbit: '0deg 75deg 3.5m',
-  fieldOfView: '28deg',
+  cameraTarget: "0.00m 0.80m 0m",
+  cameraOrbit: "0deg 75deg 4m",
+  fieldOfView: "30deg",
 };
 
 /** Color base de hueso natural (marfil óseo) */

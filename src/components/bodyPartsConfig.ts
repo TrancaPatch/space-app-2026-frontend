@@ -114,9 +114,9 @@ export interface BodyPartConfig {
  * Puedes personalizar el color inicial y la función `onClick` de cada parte individualmente.
  */
 export const DEFAULT_FULL_BODY_VIEW = {
-  cameraTarget: "-0.04m 0.85m 0m",
+  cameraTarget: "-0.04m 0.75m 0m",
   cameraOrbit: "0deg 75deg 4m",
-  fieldOfView: "28deg",
+  fieldOfView: "30deg",
 };
 
 export const BODY_PARTS_CONFIG: Record<BodyPartId, BodyPartConfig> = {
