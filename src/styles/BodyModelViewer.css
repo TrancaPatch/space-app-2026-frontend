@@ -6,12 +6,49 @@
   background: radial-gradient(circle at center, #1e2230 0%, #0d0f17 100%);
 }
 
-/* Botón flotante superior derecho para restablecer la vista general */
-.reset-view-button {
+/* Contenedor de controles superior derecho (Dropdown de sistemas y botón de reset) */
+.top-right-controls {
   position: absolute;
   top: 20px;
   right: 20px;
   z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Selector desplegable de modelos anatómicos */
+.model-select-dropdown {
+  background: rgba(18, 20, 30, 0.88);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f1f5f9;
+  border-radius: 24px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  appearance: auto;
+}
+
+.model-select-dropdown:hover,
+.model-select-dropdown:focus {
+  border-color: #64b5f6;
+  background: rgba(28, 32, 48, 0.95);
+  box-shadow: 0 4px 20px rgba(100, 181, 246, 0.25);
+}
+
+.model-select-dropdown option {
+  background: #12141e;
+  color: #e2e8f0;
+}
+
+/* Botón flotante para restablecer la vista general */
+.reset-view-button {
+  position: relative;
   background: rgba(18, 20, 30, 0.82);
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.15);
