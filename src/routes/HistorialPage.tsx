@@ -69,14 +69,12 @@ export function HistorialPage() {
             </div>
           </div>
 
-          <button
-            type="button"
-            className="btn-regresar"
-            onClick={() => navigate(-1)}
-            title="Volver a la vista anterior"
-          >
-            Regresar
-          </button>
+          <div className="btn-add-checkup" onClick={() => navigate(-1)} title="Volver a la vista anterior">
+            <span className="material-symbols-outlined">
+              arrow_back_ios
+            </span>
+            <p>Regresar</p>
+          </div>
         </header>
 
         {/* Grid principal de 3 columnas */}
@@ -162,9 +160,9 @@ export function HistorialPage() {
                     <div className={`phase-step ${phase.state === 'active' ? 'active' : ''}`}>
                       <div className="phase-top">
                         <span className="phase-icon">
-                          {phase.icon === 'clipboard' && '📋'}
-                          {phase.icon === 'rocket' && '🚀'}
-                          {phase.icon === 'heart' && '🤍'}
+                          {phase.icon === 'clipboard' && <span className="material-symbols-outlined">lab_profile</span>}
+                          {phase.icon === 'rocket' && <span className="material-symbols-outlined">rocket_launch</span>}
+                          {phase.icon === 'heart' && <span className="material-symbols-outlined">home_health</span>}
                         </span>
                         <div>
                           <div className="phase-title">{phase.title}</div>
@@ -206,11 +204,10 @@ export function HistorialPage() {
             <div className="history-box-card">
               <div className="history-box-header">
                 <div className="box-title-group">
-                  <span>👥</span>
                   <span>Antecedentes familiares</span>
                 </div>
                 <span className="box-edit-icon" title="Editar antecedentes familiares">
-                  ✏️
+
                 </span>
               </div>
               <ul className="history-bullets-list">
@@ -227,11 +224,10 @@ export function HistorialPage() {
             <div className="history-box-card">
               <div className="history-box-header">
                 <div className="box-title-group">
-                  <span>👤</span>
                   <span>Antecedentes personales</span>
                 </div>
                 <span className="box-edit-icon" title="Editar antecedentes personales">
-                  ✏️
+
                 </span>
               </div>
               <ul className="history-bullets-list">
@@ -247,13 +243,11 @@ export function HistorialPage() {
             {/* Detalle del chequeo seleccionado */}
             <div className="checkup-detail-card">
               <div className="detail-card-header">
-                <span>🩺</span>
                 <span>Detalle chequeo</span>
               </div>
 
               <div className="detail-items-list">
                 <div className="detail-line">
-                  <span className="detail-line-icon">📅</span>
                   <div>
                     <span className="detail-label">Fecha: </span>
                     <span className="detail-val">{selectedCheckup.date}</span>
@@ -261,7 +255,6 @@ export function HistorialPage() {
                 </div>
 
                 <div className="detail-line">
-                  <span className="detail-line-icon">🛡️</span>
                   <div>
                     <span className="detail-label">Área: </span>
                     <span className="detail-val">{selectedCheckup.area}</span>
@@ -270,7 +263,6 @@ export function HistorialPage() {
 
                 <div className="detail-line" style={{ flexDirection: 'column', gap: '4px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span className="detail-line-icon">📝</span>
                     <span className="detail-label">Descripción:</span>
                   </div>
                   <div className="detail-desc-box">

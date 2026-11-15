@@ -1,14 +1,14 @@
 {
   "mission": {
     "title": "Misión Espacial Trancapatch",
-    "appName": "App"
-  },
+    "appName": "ProtOn Health"
+  },  
   "astronauts": [
     {
       "id": "1",
       "name": "Ariel Y.",
       "role": "Capitán",
-      "avatar": "/avatars/ariel.jpg",
+      "avatar": "/avatars/ariel.png",
       "bloodType": "A+",
       "height": "168 cm",
       "weight": "74 kg",
@@ -23,7 +23,7 @@
       "id": "2",
       "name": "Manuel J.",
       "role": "Tripulante",
-      "avatar": "/avatars/manuel.jpg",
+      "avatar": "/avatars/manuel.png",
       "bloodType": "O+",
       "height": "168 cm",
       "weight": "74 kg",
@@ -38,7 +38,7 @@
       "id": "3",
       "name": "Ignacio Y.",
       "role": "Tripulante",
-      "avatar": "/avatars/ignacio.jpg",
+      "avatar": "/avatars/ignacio.png",
       "bloodType": "O-",
       "height": "168 cm",
       "weight": "74 kg",

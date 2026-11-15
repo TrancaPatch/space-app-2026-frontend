@@ -40,8 +40,10 @@ export function Navbar() {
     <header className="main-navbar">
       <div className="navbar-brand">
         <NavLink to="/" className="brand-link" title="Volver al Panel Principal">
-          <span className="brand-back-arrow">←</span>
-          <img src="/avatars/app_logo.png" alt="App" className="brand-mini-logo" />
+          <span className="material-symbols-outlined">
+            arrow_back_ios
+          </span>
+          <img src="/avatars/logo_ProtOn.svg" alt="App" className="brand-mini-logo" />
           <div className="brand-text">
             <strong>Misión Espacial Trancapatch</strong>
             <span className="brand-sub">Panel de Control</span>
@@ -54,7 +56,6 @@ export function Navbar() {
           to={`/body/${astronautId}`}
           className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
         >
-          <span className="nav-icon">🧍</span>
           <span>Cuerpo 3D</span>
         </NavLink>
 
@@ -62,7 +63,6 @@ export function Navbar() {
           to={`/historial/${astronautId}`}
           className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
         >
-          <span className="nav-icon">📋</span>
           <span>Historial Clínico</span>
         </NavLink>
       </nav>
