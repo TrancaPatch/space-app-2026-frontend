@@ -17,6 +17,14 @@ import {
   type SkeletonPartConfig,
   type SkeletonPartId,
 } from './skeletonPartsConfig';
+import {
+  CARDIOVASCULAR_PARTS_CONFIG,
+  DEFAULT_CARDIOVASCULAR_VIEW,
+  CARDIOVASCULAR_BASE_COLOR,
+  CARDIOVASCULAR_HIGHLIGHT_COLOR,
+  type CardiovascularPartConfig,
+  type CardiovascularPartId,
+} from './cardiovascularPartsConfig';
 import '../styles/BodyModelViewer.css';
 
 /**
@@ -158,14 +166,17 @@ export interface BodyModelViewerProps {
 export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelViewerProps = {}) {
   const bodyViewerRef = useRef<ModelViewerElement | null>(null);
   const skeletonViewerRef = useRef<ModelViewerElement | null>(null);
+  const cardioViewerRef = useRef<ModelViewerElement | null>(null);
 
   const [selectedModel, setSelectedModel] = useState<ModelMode>('cuerpo-holografico');
   const [selectedPart, setSelectedPart] = useState<BodyPartConfig | null>(null);
   const [selectedSkeletonPart, setSelectedSkeletonPart] = useState<SkeletonPartConfig | null>(null);
+  const [selectedCardioPart, setSelectedCardioPart] = useState<CardiovascularPartConfig | null>(null);
 
   // Estados de preparación para evitar parpadeo o renderizado de material sin compilar
   const [isHoloReady, setIsHoloReady] = useState(false);
   const [isSkeletonReady, setIsSkeletonReady] = useState(false);
+  const [isCardioReady, setIsCardioReady] = useState(false);
 
   // ============================================================================
   // LÓGICA DEL CUERPO HOLOGRÁFICO (100% INTACTA)
@@ -244,6 +255,37 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
   }, []);
 
   // ============================================================================
+  // LÓGICA DEL SISTEMA CARDIOVASCULAR (COLOR CARMESÍ EN REPOSO Y AMARILLO AL SELECCIONAR)
+  // ============================================================================
+
+  /**
+   * Aplica el color carmesí vascular (#C62828) en reposo a todos los vasos y corazón
+   */
+  const applyCardiovascularRestingState = useCallback(() => {
+    const model = cardioViewerRef.current?.model;
+    if (!model) return;
+    const cardioRgba: RGBA = hexToRgba(CARDIOVASCULAR_BASE_COLOR);
+    model.materials.forEach((mat) => {
+      mat.pbrMetallicRoughness.setBaseColorFactor(cardioRgba);
+    });
+  }, []);
+
+  /**
+   * Pinta un vaso o estructura vascular específica (por defecto amarillo dorado #FFD700)
+   */
+  const paintCardiovascularPart = useCallback((
+    partId: CardiovascularPartId,
+    colorHexOrRgba: string | RGBA = CARDIOVASCULAR_HIGHLIGHT_COLOR,
+  ) => {
+    const model = cardioViewerRef.current?.model;
+    if (!model) return;
+    const mat = model.getMaterialByName(partId);
+    if (!mat) return;
+    const rgba: RGBA = typeof colorHexOrRgba === 'string' ? hexToRgba(colorHexOrRgba) : colorHexOrRgba;
+    mat.pbrMetallicRoughness.setBaseColorFactor(rgba);
+  }, []);
+
+  // ============================================================================
   // RESTABLECER CÁMARA SEGÚN EL MODELO ACTIVO
   // ============================================================================
 
@@ -267,20 +309,29 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
       viewer.fieldOfView = DEFAULT_SKELETON_VIEW.fieldOfView;
       applySkeletonRestingState();
       setSelectedSkeletonPart(null);
+    } else if (selectedModel === 'cardiovascular') {
+      const viewer = cardioViewerRef.current;
+      if (!viewer) return;
+      viewer.cameraTarget = DEFAULT_CARDIOVASCULAR_VIEW.cameraTarget;
+      viewer.cameraOrbit = DEFAULT_CARDIOVASCULAR_VIEW.cameraOrbit;
+      viewer.fieldOfView = DEFAULT_CARDIOVASCULAR_VIEW.fieldOfView;
+      applyCardiovascularRestingState();
+      setSelectedCardioPart(null);
     }
-  }, [selectedModel, applyHolographicRestingState, applySkeletonRestingState]);
+  }, [selectedModel, applyHolographicRestingState, applySkeletonRestingState, applyCardiovascularRestingState]);
 
   /**
    * Cambia el modelo 3D activo desde el selector desplegable
    */
   const handleModelChange = (newModel: ModelMode) => {
-    if (newModel === 'cardiovascular' || newModel === 'nervioso') {
-      alert(`El ${newModel === 'cardiovascular' ? 'Sistema Cardiovascular' : 'Sistema Nervioso'} se implementará en el siguiente paso.`);
+    if (newModel === 'nervioso') {
+      alert('El Sistema Nervioso se implementará en el siguiente paso.');
       return;
     }
     setSelectedModel(newModel);
     setSelectedPart(null);
     setSelectedSkeletonPart(null);
+    setSelectedCardioPart(null);
 
     if (newModel === 'cuerpo-holografico') {
       const viewer = bodyViewerRef.current;
@@ -297,6 +348,14 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
         viewer.cameraOrbit = DEFAULT_SKELETON_VIEW.cameraOrbit;
         viewer.fieldOfView = DEFAULT_SKELETON_VIEW.fieldOfView;
         applySkeletonRestingState();
+      }
+    } else if (newModel === 'cardiovascular') {
+      const viewer = cardioViewerRef.current;
+      if (viewer) {
+        viewer.cameraTarget = DEFAULT_CARDIOVASCULAR_VIEW.cameraTarget;
+        viewer.cameraOrbit = DEFAULT_CARDIOVASCULAR_VIEW.cameraOrbit;
+        viewer.fieldOfView = DEFAULT_CARDIOVASCULAR_VIEW.fieldOfView;
+        applyCardiovascularRestingState();
       }
     }
   };
@@ -447,6 +506,78 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
     };
   }, [applySkeletonRestingState, paintSkeletonBone, resetCamera]);
 
+  // ============================================================================
+  // EVENTOS Y CICLO DE VIDA: SISTEMA CARDIOVASCULAR
+  // ============================================================================
+  useEffect(() => {
+    const viewer = cardioViewerRef.current;
+    if (!viewer) return;
+
+    const handleLoad = () => {
+      applyCardiovascularRestingState();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsCardioReady(true);
+        });
+      });
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      if (!viewer.model) return;
+
+      // 1. Restaurar color carmesí a todos los vasos
+      applyCardiovascularRestingState();
+
+      // 2. Detectar qué vaso o corazón fue tocado mediante raycast
+      const material = viewer.materialFromPoint(event.clientX, event.clientY);
+      if (!material) {
+        resetCamera();
+        return;
+      }
+
+      const partId = material.name as CardiovascularPartId;
+      const partConfig = CARDIOVASCULAR_PARTS_CONFIG[partId];
+      if (!partConfig) {
+        setSelectedCardioPart(null);
+        return;
+      }
+
+      // 3. Resaltar la parte seleccionada en Amarillo
+      paintCardiovascularPart(partId, CARDIOVASCULAR_HIGHLIGHT_COLOR);
+      setSelectedCardioPart(partConfig);
+
+      // 4. Enfocar automáticamente la cámara hacia la estructura seleccionada
+      viewer.cameraTarget = partConfig.cameraTarget;
+      if (partConfig.cameraOrbit) {
+        viewer.cameraOrbit = partConfig.cameraOrbit;
+      }
+      if (partConfig.fieldOfView) {
+        viewer.fieldOfView = partConfig.fieldOfView;
+      }
+
+      // 5. Ejecutar la acción personalizada configurada para este vaso
+      partConfig.onClick({
+        id: partId,
+        config: partConfig,
+        setPartColor: (customColor) => {
+          paintCardiovascularPart(partId, customColor);
+        },
+      });
+    };
+
+    viewer.addEventListener('load', handleLoad);
+    viewer.addEventListener('click', handleClick);
+
+    if (viewer.model) {
+      handleLoad();
+    }
+
+    return () => {
+      viewer.removeEventListener('load', handleLoad);
+      viewer.removeEventListener('click', handleClick);
+    };
+  }, [applyCardiovascularRestingState, paintCardiovascularPart, resetCamera]);
+
   return (
     <div className="viewer-container">
       {/* Controles en la parte superior derecha: Dropdown de modelos y Botón de vista general */}
@@ -459,7 +590,7 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
         >
           <option value="cuerpo-holografico">🧍 Cuerpo Holográfico</option>
           <option value="esqueleto">💀 Esqueleto (135 Huesos)</option>
-          <option value="cardiovascular" disabled>🫀 Cardiovascular (Paso sig.)</option>
+          <option value="cardiovascular">🫀 Sistema Cardiovascular (33 Vasos)</option>
           <option value="nervioso" disabled>🧠 Nervioso (Paso sig.)</option>
         </select>
 
@@ -497,6 +628,18 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
         </div>
       )}
 
+      {/* Panel informativo del sistema cardiovascular seleccionado */}
+      {selectedModel === 'cardiovascular' && selectedCardioPart && (
+        <div className="part-info-card">
+          <span className="part-info-region">{selectedCardioPart.region}</span>
+          <strong className="part-info-title">{selectedCardioPart.label}</strong>
+          <code className="part-info-id">Estructura: {selectedCardioPart.id}</code>
+          <span className="part-info-coords">
+            Target: <code>{selectedCardioPart.cameraTarget}</code>
+          </span>
+        </div>
+      )}
+
       {/* Visor 3D: Cuerpo Holográfico (Permanece en memoria GPU con shaders compilados para evitar recarga) */}
       <div className={`model-viewport ${selectedModel === 'cuerpo-holografico' && isHoloReady ? 'active' : ''}`}>
         <model-viewer
@@ -528,6 +671,24 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
           camera-orbit={DEFAULT_SKELETON_VIEW.cameraOrbit}
           camera-target={DEFAULT_SKELETON_VIEW.cameraTarget}
           field-of-view={DEFAULT_SKELETON_VIEW.fieldOfView}
+          shadow-intensity="0"
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
+
+      {/* Visor 3D: Sistema Cardiovascular */}
+      <div className={`model-viewport ${selectedModel === 'cardiovascular' && isCardioReady ? 'active' : ''}`}>
+        <model-viewer
+          ref={cardioViewerRef}
+          src="/SisCardiovascular.glb"
+          alt="Modelo 3D del sistema cardiovascular interactivo"
+          camera-controls
+          touch-action="pan-y"
+          disable-tap
+          interpolation-decay={200}
+          camera-orbit={DEFAULT_CARDIOVASCULAR_VIEW.cameraOrbit}
+          camera-target={DEFAULT_CARDIOVASCULAR_VIEW.cameraTarget}
+          field-of-view={DEFAULT_CARDIOVASCULAR_VIEW.fieldOfView}
           shadow-intensity="0"
           style={{ width: '100%', height: '100%' }}
         />
