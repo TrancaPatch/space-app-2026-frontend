@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { getAstronautById, astronautsList } from '../data/astronauts';
+import { astronautsService } from '../services/astronautsService';
+import type { Astronaut } from '../services/astronautsService';
 import '../styles/Navigation.css';
 
 export function Navbar() {
@@ -8,7 +11,30 @@ export function Navbar() {
   // Extraer el astronautId de la URL si existe (/body/:astronautId o /historial/:astronautId), por defecto '1'
   const match = location.pathname.match(/\/(body|historial)\/([^/]+)/);
   const astronautId = match ? match[2] : '1';
-  const astronaut = getAstronautById(astronautId) || astronautsList[0];
+  const defaultAstro = getAstronautById(astronautId) || astronautsList[0];
+
+  const [astronaut, setAstronaut] = useState<Astronaut>(defaultAstro as any);
+
+  useEffect(() => {
+    let isMounted = true;
+    astronautsService
+      .getAstronautById(astronautId)
+      .then((data) => {
+        if (isMounted && data) {
+          setAstronaut(data);
+        }
+      })
+      .catch(() => {
+        // Fallback al astronauta estático
+        if (isMounted) {
+          setAstronaut(defaultAstro as any);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [astronautId]);
 
   return (
     <header className="main-navbar">
@@ -42,10 +68,16 @@ export function Navbar() {
       </nav>
 
       <div className="navbar-astronaut-badge">
-        <img src={astronaut.avatar} alt={astronaut.name} className="navbar-avatar-img" />
+        <img
+          src={astronaut.avatar || defaultAstro.avatar}
+          alt={astronaut.name || astronaut.fullName}
+          className="navbar-avatar-img"
+        />
         <div className="astronaut-info">
-          <span className="astronaut-name">{astronaut.name}</span>
-          <span className="astronaut-id">{astronaut.role} • ID #{astronaut.id}</span>
+          <span className="astronaut-name">{astronaut.name || astronaut.fullName}</span>
+          <span className="astronaut-id">
+            {astronaut.role} • ID #{astronaut.id}
+          </span>
         </div>
         <span className="status-indicator online" title="Telemetría en tiempo real activa">
           ● Online
