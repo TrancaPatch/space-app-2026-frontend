@@ -69,14 +69,12 @@ export function HistorialPage() {
             </div>
           </div>
 
-          <button
-            type="button"
-            className="btn-regresar"
-            onClick={() => navigate(-1)}
-            title="Volver a la vista anterior"
-          >
-            Regresar
-          </button>
+          <div className="btn-add-checkup" onClick={() => navigate(-1)} title="Volver a la vista anterior">
+            <span className="material-symbols-outlined">
+              arrow_back_ios
+            </span>
+            <p>Regresar</p>
+          </div>
         </header>
 
         {/* Grid principal de 3 columnas */}
