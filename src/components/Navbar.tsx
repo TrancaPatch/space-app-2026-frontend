@@ -15,7 +15,7 @@ export function Navbar() {
       <div className="navbar-brand">
         <NavLink to="/" className="brand-link" title="Volver al Panel Principal">
           <span className="brand-back-arrow">←</span>
-          <img src="/avatars/app_logo.png" alt="App" className="brand-mini-logo" />
+          <img src="/avatars/logo_ProtOn.svg" alt="App" className="brand-mini-logo" />
           <div className="brand-text">
             <strong>Misión Espacial Trancapatch</strong>
             <span className="brand-sub">Panel de Control</span>

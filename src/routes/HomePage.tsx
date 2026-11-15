@@ -13,7 +13,7 @@ export function HomePage() {
         <header className="dashboard-header">
           <div className="header-left">
             <img
-              src="/avatars/app_logo.png"
+              src="/avatars/logo_ProtOn.svg"
               alt="Logo App"
               className="app-logo-img"
               onError={(e) => {
@@ -57,40 +57,32 @@ export function HomePage() {
               <div className="card-stats-grid">
                 {/* Altura */}
                 <div className="stat-item">
-                  <span className="stat-icon" aria-label="Estatura">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                      <path d="M12 2L8 6h3v12H8l4 4 4-4h-3V6h3L12 2z" />
-                    </svg>
+                  <span className="material-symbols-outlined" aria-label="Estatura">
+                    height
                   </span>
                   <span>{astronaut.height}</span>
                 </div>
 
                 {/* Peso */}
                 <div className="stat-item">
-                  <span className="stat-icon" aria-label="Peso">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                      <path d="M12 3a4 4 0 00-4 4v1H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2v-9a2 2 0 00-2-2h-3V7a4 4 0 00-4-4zm-2 4a2 2 0 114 0v1h-4V7z" />
-                    </svg>
+                  <span className="material-symbols-outlined" aria-label="Peso">
+                    weight
                   </span>
                   <span>{astronaut.weight}</span>
                 </div>
 
                 {/* Pulso */}
                 <div className="stat-item">
-                  <span className="stat-icon" aria-label="Pulso">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                    </svg>
+                  <span className="material-symbols-outlined" aria-label="Pulso">
+                    ecg_heart
                   </span>
                   <span>{astronaut.pulse}</span>
                 </div>
 
                 {/* Presión Arterial */}
                 <div className="stat-item">
-                  <span className="stat-icon" aria-label="Presión arterial">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                      <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" />
-                    </svg>
+                  <span className="material-symbols-outlined" aria-label="Presión arterial">
+                    blood_pressure
                   </span>
                   <span>{astronaut.pressure}</span>
                 </div>
