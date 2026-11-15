@@ -2,7 +2,7 @@
   "astronautsHistory": {
     "1": {
       "id": "1",
-      "name": "Juan Martínez (Ariel Y.)",
+      "name": "Ariel Yanarico",
       "code": "D AST-001 - Capitán",
       "avatar": "/avatars/ariel.png",
       "familyHistory": [
@@ -309,6 +309,248 @@
             { "label": "Pre-vuelo\n(14/02/2026)", "value": 72 },
             { "label": "Durante\n(15/10/2026)", "value": 80 },
             { "label": "Actual\n(10/11/2026)", "value": 76 }
+          ]
+        }
+      }
+    },
+    "4": {
+      "id": "4",
+      "name": "Moises Soto Gutierrez",
+      "code": "D AST-004 - Especialista de Misión",
+      "avatar": "/avatars/moises.png",
+      "familyHistory": [
+        "Espondiloartrosis lumbar (Padre).",
+        "Migraña con aura visual (Madre)."
+      ],
+      "personalHistory": [
+        "Parestesia transitoria cubital derecha (2021).",
+        "Hipermetropía corregida (+1.25 D).",
+        "Sin antecedentes de alergias farmacológicas."
+      ],
+      "missionPhases": [
+        {
+          "id": "pre",
+          "title": "Antes del viaje",
+          "subtitle": "(Pre-misión)",
+          "icon": "clipboard",
+          "description": "Línea base neurológica y electromiografía.",
+          "status": "Completado:",
+          "date": "05/10/2026",
+          "state": "completed"
+        },
+        {
+          "id": "during",
+          "title": "Durante el viaje",
+          "subtitle": "(En-misión)",
+          "icon": "rocket",
+          "description": "Monitoreo continuo neurosensorial y propiocepción.",
+          "status": "En curso",
+          "state": "active"
+        },
+        {
+          "id": "post",
+          "title": "Después del viaje",
+          "subtitle": "(Post-misión)",
+          "icon": "heart",
+          "description": "Rehabilitación neuro-muscular y alineación espinal.",
+          "status": "Pendiente",
+          "state": "pending"
+        }
+      ],
+      "checkups": [
+        {
+          "id": "chk-401",
+          "date": "11/11/2026",
+          "title": "Evaluación neurosensorial de extremidades",
+          "status": "warning",
+          "area": "Sistema Nervioso / Médula Espinal",
+          "description": "Parestesia y leve sensación de hormigueo en dermatoma L5-S1 al fijar posición en módulo experimental. Sugiere compresión radicular postural por distensión axial en microgravedad. Se prescribe protocolo de estiramiento y observación."
+        },
+        {
+          "id": "chk-402",
+          "date": "18/10/2026",
+          "title": "Control neurovestibular",
+          "status": "nominal",
+          "area": "Tronco Encefálico",
+          "description": "Reflejo vestíbulo-ocular y estabilidad cefálica conservados. Sin signos de cinetosis espacial severa."
+        },
+        {
+          "id": "chk-403",
+          "date": "05/10/2026",
+          "title": "Evaluación pre-vuelo",
+          "status": "nominal",
+          "area": "Salud General",
+          "description": "Línea base completada. Velocidad de conducción motora y sensorial dentro de percentiles óptimos para astronautas."
+        }
+      ],
+      "comparisonMetrics": {
+        "Peso": {
+          "label": "Peso",
+          "unit": "Kg",
+          "min": 70,
+          "max": 82,
+          "step": 2,
+          "points": [
+            { "label": "Antes\n(14/02/2026)", "value": 76.5 },
+            { "label": "Durante\n(18/10/2026)", "value": 74.8 },
+            { "label": "Actual\n(11/11/2026)", "value": 75 }
+          ]
+        },
+        "Pulso": {
+          "label": "Frecuencia Cardíaca",
+          "unit": "BPM",
+          "min": 60,
+          "max": 100,
+          "step": 10,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 68 },
+            { "label": "Durante\n(18/10/2026)", "value": 76 },
+            { "label": "Actual\n(11/11/2026)", "value": 72 }
+          ]
+        },
+        "Presión": {
+          "label": "Presión Sistólica",
+          "unit": "mmHg",
+          "min": 100,
+          "max": 140,
+          "step": 10,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 116 },
+            { "label": "Durante\n(18/10/2026)", "value": 122 },
+            { "label": "Actual\n(11/11/2026)", "value": 118 }
+          ]
+        },
+        "SpO2": {
+          "label": "Saturación SpO2",
+          "unit": "%",
+          "min": 94,
+          "max": 100,
+          "step": 1,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 99 },
+            { "label": "Durante\n(18/10/2026)", "value": 98 },
+            { "label": "Actual\n(11/11/2026)", "value": 99 }
+          ]
+        }
+      }
+    },
+    "5": {
+      "id": "5",
+      "name": "Brenda Caballero Gutierrez",
+      "code": "D AST-005 - Oficial Científica / Médico",
+      "avatar": "/avatars/brenda.png",
+      "familyHistory": [
+        "Anemia ferropénica crónica (Madre).",
+        "Trombocitopenia benigna leve (Hermana)."
+      ],
+      "personalHistory": [
+        "Anemia ferropénica / microcítica (diagnosticada 2019, tratada con hierro bisglicinato y ácido fólico).",
+        "Tendencia a hipotensión ortostática en bipedestación prolongada.",
+        "Colecistectomía laparoscópica sin complicaciones (2020)."
+      ],
+      "missionPhases": [
+        {
+          "id": "pre",
+          "title": "Antes del viaje",
+          "subtitle": "(Pre-misión)",
+          "icon": "clipboard",
+          "description": "Perfil hematológico completo, ferritina y cinética de hierro.",
+          "status": "Completado:",
+          "date": "02/10/2026",
+          "state": "completed"
+        },
+        {
+          "id": "during",
+          "title": "Durante el viaje",
+          "subtitle": "(En-misión)",
+          "icon": "rocket",
+          "description": "Monitorización de anemia espacial y hemodilución por microgravedad.",
+          "status": "En curso",
+          "state": "active"
+        },
+        {
+          "id": "post",
+          "title": "Después del viaje",
+          "subtitle": "(Post-misión)",
+          "icon": "heart",
+          "description": "Terapia de reposición férrica y masa eritrocitaria.",
+          "status": "Pendiente",
+          "state": "pending"
+        }
+      ],
+      "checkups": [
+        {
+          "id": "chk-501",
+          "date": "11/11/2026",
+          "title": "Biometría hemática orbital",
+          "status": "warning",
+          "area": "Sistema Hematológico / Cardiovascular",
+          "description": "Hemoglobina en 11.2 g/dL y hematocrito en 33.8%. Cuadro compatible con anemia espacial fisiológica por neocitólisis selectiva de glóbulos rojos al reajustarse el volumen vascular central. Se indica suplementación férrica diaria y control de hidratación."
+        },
+        {
+          "id": "chk-502",
+          "date": "20/10/2026",
+          "title": "Control hemodinámico y gasto cardíaco",
+          "status": "warning",
+          "area": "Sistema Cardiovascular",
+          "description": "Frecuencia cardíaca en reposo ligeramente compensatoria (82 BPM) para mantener perfusión tisular óptima ante menor masa eritrocitaria. Presión arterial en 110/70 mmHg."
+        },
+        {
+          "id": "chk-503",
+          "date": "02/10/2026",
+          "title": "Certificación hematológica de vuelo",
+          "status": "nominal",
+          "area": "Salud General",
+          "description": "Línea base pre-lanzamiento: Hemoglobina 12.6 g/dL, ferritina 48 ng/mL. Aprobación médica de vuelo expedida."
+        }
+      ],
+      "comparisonMetrics": {
+        "Peso": {
+          "label": "Peso",
+          "unit": "Kg",
+          "min": 55,
+          "max": 68,
+          "step": 2,
+          "points": [
+            { "label": "Antes\n(14/02/2026)", "value": 62.5 },
+            { "label": "Durante\n(20/10/2026)", "value": 60.8 },
+            { "label": "Actual\n(11/11/2026)", "value": 61 }
+          ]
+        },
+        "Pulso": {
+          "label": "Frecuencia Cardíaca",
+          "unit": "BPM",
+          "min": 60,
+          "max": 100,
+          "step": 10,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 74 },
+            { "label": "Durante\n(20/10/2026)", "value": 84 },
+            { "label": "Actual\n(11/11/2026)", "value": 82 }
+          ]
+        },
+        "Presión": {
+          "label": "Presión Sistólica",
+          "unit": "mmHg",
+          "min": 90,
+          "max": 130,
+          "step": 10,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 114 },
+            { "label": "Durante\n(20/10/2026)", "value": 112 },
+            { "label": "Actual\n(11/11/2026)", "value": 110 }
+          ]
+        },
+        "SpO2": {
+          "label": "Saturación SpO2",
+          "unit": "%",
+          "min": 94,
+          "max": 100,
+          "step": 1,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 99 },
+            { "label": "Durante\n(20/10/2026)", "value": 98 },
+            { "label": "Actual\n(11/11/2026)", "value": 98 }
           ]
         }
       }

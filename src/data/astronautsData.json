@@ -48,6 +48,38 @@
         "Baja saturación de oxígeno",
         "Dolor de estómago"
       ]
+    },
+    {
+      "id": "4",
+      "name": "Moises S.",
+      "fullName": "Moises Soto Gutierrez",
+      "role": "Especialista de Misión",
+      "avatar": "/avatars/moises.png",
+      "bloodType": "B+",
+      "height": "176 cm",
+      "weight": "75 kg",
+      "pulse": "72 bpm",
+      "pressure": "118/76",
+      "symptoms": [
+        "Parestesia leve en extremidades",
+        "Fatiga neuro-ocular"
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Brenda C.",
+      "fullName": "Brenda Caballero Gutierrez",
+      "role": "Oficial Científica",
+      "avatar": "/avatars/brenda.png",
+      "bloodType": "O+",
+      "height": "165 cm",
+      "weight": "61 kg",
+      "pulse": "82 bpm",
+      "pressure": "110/70",
+      "symptoms": [
+        "Anemia espacial leve",
+        "Hipotensión ortostática"
+      ]
     }
   ],
   "recentUpdates": [
@@ -100,6 +132,26 @@
       "status": "Removido",
       "pulse": "76 BPM",
       "pressure": "120/80"
+    },
+    {
+      "id": "6",
+      "date": "11/11/26",
+      "crewMember": "Moises S.",
+      "astronautId": "4",
+      "notification": "Parestesia leve en extremidades",
+      "status": "Añadido",
+      "pulse": "72 BPM",
+      "pressure": "118/76"
+    },
+    {
+      "id": "7",
+      "date": "11/11/26",
+      "crewMember": "Brenda C.",
+      "astronautId": "5",
+      "notification": "Anemia espacial leve detectada",
+      "status": "Añadido",
+      "pulse": "82 BPM",
+      "pressure": "110/70"
     }
   ]
 }

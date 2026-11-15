@@ -3,6 +3,7 @@ import rawData from './astronautsData.json';
 export interface Astronaut {
   id: string;
   name: string;
+  fullName?: string;
   role: string;
   avatar: string;
   bloodType: string;
