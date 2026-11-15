@@ -14,7 +14,9 @@ export function Navbar() {
     <header className="main-navbar">
       <div className="navbar-brand">
         <NavLink to="/" className="brand-link" title="Volver al Panel Principal">
-          <span className="brand-back-arrow">←</span>
+          <span className="material-symbols-outlined">
+            arrow_back_ios
+          </span>
           <img src="/avatars/logo_ProtOn.svg" alt="App" className="brand-mini-logo" />
           <div className="brand-text">
             <strong>Misión Espacial Trancapatch</strong>
