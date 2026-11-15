@@ -1,0 +1,328 @@
+/* Estilos del Dashboard Principal según la especificación de diseño */
+.dashboard-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 10%, #17233f 0%, #0d1424 100%);
+  color: #f1f5f9;
+  padding: 24px 40px 60px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header superior principal */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0 28px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-logo-img {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.app-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.mission-title {
+  font-size: 30px;
+  font-weight: 400;
+  color: #f8fafc;
+  letter-spacing: -0.01em;
+}
+
+/* Grid de Fichas de Astronautas */
+.astronauts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.astronaut-card {
+  background: #253356;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.astronaut-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(96, 165, 250, 0.5);
+  box-shadow: 0 14px 34px rgba(18, 42, 85, 0.5);
+  background: #2b3b64;
+}
+
+/* Encabezado interno de la ficha */
+.card-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.card-profile-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.card-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.card-names {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.astronaut-name {
+  font-size: 22px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.astronaut-role {
+  font-size: 14px;
+  color: #9cb4dc;
+  margin-top: 3px;
+}
+
+/* Insignia de gota de tipo sanguíneo */
+.blood-badge-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 38px;
+  height: 48px;
+}
+
+.blood-drop-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.blood-drop-text {
+  position: absolute;
+  top: 56%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+/* Grid de métricas físicas y signos vitales */
+.card-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.stat-icon {
+  font-size: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  color: #cbdcf7;
+}
+
+/* Lista de síntomas / notas con viñetas */
+.symptoms-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.symptom-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  color: #dbe7f9;
+  line-height: 1.4;
+}
+
+.bullet-dot {
+  font-size: 16px;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.card-hover-hint {
+  margin-top: 18px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  font-size: 12px;
+  color: #60a5fa;
+  font-weight: 600;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+
+.astronaut-card:hover .card-hover-hint {
+  opacity: 1;
+  color: #93c5fd;
+}
+
+/* Sección de Actualizaciones Recientes */
+.recent-updates-section {
+  background: #19233c;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 24px 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  text-align: left;
+}
+
+.updates-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 18px 0;
+  letter-spacing: -0.01em;
+}
+
+/* Tabla de Actualizaciones */
+.updates-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.updates-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  font-size: 14px;
+}
+
+.updates-table th {
+  padding: 6px 16px;
+  color: #9bb3dd;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.update-row {
+  background: #253356;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.update-row:hover {
+  background: #2e3e68;
+}
+
+.update-row td {
+  padding: 13px 16px;
+  color: #ffffff;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.update-row td:first-child {
+  border-left: 1px solid rgba(255, 255, 255, 0.04);
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  font-family: monospace;
+  font-size: 13px;
+  color: #cbdcf7;
+}
+
+.update-row td:last-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-family: monospace;
+}
+
+.member-name-clickable {
+  font-weight: 600;
+  color: #93c5fd;
+  text-decoration: none;
+}
+
+.member-name-clickable:hover {
+  text-decoration: underline;
+}
+
+.status-cell {
+  font-weight: 500;
+  color: #e2e8f0;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .astronauts-grid {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .dashboard-page {
+    padding: 20px 16px 40px;
+  }
+}

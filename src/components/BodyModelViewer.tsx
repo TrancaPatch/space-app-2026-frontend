@@ -151,7 +151,11 @@ function applyHologramShader(
   }
 }
 
-export function BodyModelViewer() {
+export interface BodyModelViewerProps {
+  astronautId?: string;
+}
+
+export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelViewerProps = {}) {
   const bodyViewerRef = useRef<ModelViewerElement | null>(null);
   const skeletonViewerRef = useRef<ModelViewerElement | null>(null);
 

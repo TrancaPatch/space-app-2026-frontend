@@ -1,0 +1,155 @@
+.main-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 28px;
+  background: rgba(18, 27, 45, 0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f1f5f9;
+  z-index: 100;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.navbar-brand .brand-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #fff;
+  transition: opacity 0.2s ease;
+}
+
+.navbar-brand .brand-link:hover {
+  opacity: 0.85;
+}
+
+.brand-back-arrow {
+  font-size: 20px;
+  font-weight: 700;
+  color: #60a5fa;
+  margin-right: -4px;
+}
+
+.brand-mini-logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.brand-text strong {
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.brand-sub {
+  font-size: 11px;
+  color: #94a3b8;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 20px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-item.active {
+  color: #fff;
+  background: #2563eb;
+  box-shadow: 0 2px 12px rgba(37, 99, 235, 0.45);
+}
+
+.navbar-astronaut-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 14px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar-avatar-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+}
+
+.astronaut-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.astronaut-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.astronaut-id {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.status-indicator.online {
+  font-size: 11px;
+  color: #4ade80;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(74, 222, 128, 0.12);
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+@media (max-width: 860px) {
+  .main-navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 14px;
+  }
+  .navbar-astronaut-badge {
+    display: none;
+  }
+}

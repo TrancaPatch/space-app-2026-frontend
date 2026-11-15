@@ -1,0 +1,105 @@
+{
+  "mission": {
+    "title": "Misión Espacial Trancapatch",
+    "appName": "App"
+  },
+  "astronauts": [
+    {
+      "id": "1",
+      "name": "Ariel Y.",
+      "role": "Capitán",
+      "avatar": "/avatars/ariel.jpg",
+      "bloodType": "A+",
+      "height": "168 cm",
+      "weight": "74 kg",
+      "pulse": "76 bpm",
+      "pressure": "120/80",
+      "symptoms": [
+        "Radiación UV moderada",
+        "Tos"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Manuel J.",
+      "role": "Tripulante",
+      "avatar": "/avatars/manuel.jpg",
+      "bloodType": "O+",
+      "height": "168 cm",
+      "weight": "74 kg",
+      "pulse": "76 bpm",
+      "pressure": "120/80",
+      "symptoms": [
+        "Perdida ósea",
+        "Dolor en el dedo gordo del pie"
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Ignacio Y.",
+      "role": "Tripulante",
+      "avatar": "/avatars/ignacio.jpg",
+      "bloodType": "O-",
+      "height": "168 cm",
+      "weight": "74 kg",
+      "pulse": "76 bpm",
+      "pressure": "120/80",
+      "symptoms": [
+        "Baja saturación de oxígeno",
+        "Dolor de estómago"
+      ]
+    }
+  ],
+  "recentUpdates": [
+    {
+      "id": "1",
+      "date": "10/11/26",
+      "crewMember": "Ariel Y.",
+      "astronautId": "1",
+      "notification": "Radiación UV moderada",
+      "status": "Añadido",
+      "pulse": "76 BPM",
+      "pressure": "120/80"
+    },
+    {
+      "id": "2",
+      "date": "10/11/26",
+      "crewMember": "Manuel J.",
+      "astronautId": "2",
+      "notification": "Dolor en el dedo gordo del pie",
+      "status": "Añadido",
+      "pulse": "76 BPM",
+      "pressure": "120/80"
+    },
+    {
+      "id": "3",
+      "date": "09/11/26",
+      "crewMember": "Ignacio Y.",
+      "astronautId": "3",
+      "notification": "Dolor de estómago",
+      "status": "Añadido",
+      "pulse": "76 BPM",
+      "pressure": "120/80"
+    },
+    {
+      "id": "4",
+      "date": "09/11/26",
+      "crewMember": "Ariel Y.",
+      "astronautId": "1",
+      "notification": "Dolor de cabeza",
+      "status": "Removido",
+      "pulse": "76 BPM",
+      "pressure": "120/80"
+    },
+    {
+      "id": "5",
+      "date": "08/11/26",
+      "crewMember": "Manuel J.",
+      "astronautId": "2",
+      "notification": "Fiebre",
+      "status": "Removido",
+      "pulse": "76 BPM",
+      "pressure": "120/80"
+    }
+  ]
+}

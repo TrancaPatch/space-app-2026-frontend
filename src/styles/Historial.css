@@ -1,0 +1,586 @@
+/* Estilos para el Historial Médico del Astronauta (Idéntico a la imagen de referencia) */
+.historial-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 10%, #15223e 0%, #0d1424 100%);
+  color: #f1f5f9;
+  padding: 24px 36px 60px;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.historial-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Banner de encabezado superior */
+.historial-banner-card {
+  background: #1b2746;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.banner-left-content {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.banner-folder-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #93c5fd;
+  border: 2px solid rgba(147, 197, 253, 0.4);
+  border-radius: 10px;
+  background: rgba(37, 99, 235, 0.15);
+}
+
+.banner-text-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.banner-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.banner-subtitle {
+  font-size: 13px;
+  color: #9cb4dc;
+  margin: 0;
+}
+
+.btn-regresar {
+  background: #121929;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 8px 26px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.btn-regresar:hover {
+  background: #1e293b;
+  border-color: #60a5fa;
+  transform: translateY(-1px);
+}
+
+/* Grid principal de 3 columnas */
+.historial-main-grid {
+  display: grid;
+  grid-template-columns: 270px 1fr 320px;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ============================================================================
+   COLUMNA IZQUIERDA: Últimos Chequeos con Línea de Tiempo
+   ============================================================================ */
+.checkups-card {
+  background: #1b2746;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 22px 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.checkups-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 22px;
+  padding-left: 6px;
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 20px;
+  gap: 16px;
+}
+
+/* Línea vertical blanca que une los nodos */
+.timeline-list::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: 31px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.6);
+  z-index: 1;
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  cursor: pointer;
+  padding: 6px 10px 6px 0;
+  border-radius: 10px;
+  transition: background 0.2s ease;
+}
+
+.timeline-item:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.timeline-node {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.timeline-item.active .timeline-node {
+  background: #a855f7;
+  box-shadow: 0 0 0 4px #1b2746, 0 0 0 6px #a855f7;
+}
+
+.timeline-node-inner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffffff;
+}
+
+.timeline-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  flex: 1;
+}
+
+.timeline-date {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.timeline-desc {
+  font-size: 11px;
+  color: #9cb4dc;
+  margin-top: 1px;
+}
+
+.timeline-status-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-warning-icon {
+  color: #fbbf24;
+  font-size: 20px;
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.4));
+}
+
+.status-success-circle {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #22c55e;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.btn-add-checkup {
+  margin-top: 24px;
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-add-checkup:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #93c5fd;
+}
+
+/* ============================================================================
+   COLUMNA CENTRAL: Perfil Astronauta, Gráfico y Fases de Misión
+   ============================================================================ */
+.historial-center-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Ficha reducida del Astronauta */
+.astronaut-mini-profile-card {
+  background: #1b2746;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.mini-avatar-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.mini-profile-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.mini-profile-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.mini-profile-code {
+  font-size: 13px;
+  color: #9cb4dc;
+  margin-top: 3px;
+}
+
+/* Gráfico de comparación */
+.medical-chart-card {
+  background: #1b2746;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chart-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ffffff;
+}
+
+.chart-icon {
+  color: #93c5fd;
+  display: flex;
+  align-items: center;
+}
+
+.chart-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #ffffff;
+}
+
+.chart-selector-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.selector-label {
+  font-size: 13px;
+  color: #9cb4dc;
+}
+
+.chart-param-dropdown {
+  background: #0d1424;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  appearance: auto;
+}
+
+.chart-svg-container {
+  width: 100%;
+}
+
+.medical-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Fases del Viaje (Stepper de 3 etapas) */
+.mission-phases-card {
+  background: #1b2746;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.phases-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.phase-step {
+  flex: 1;
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  min-height: 140px;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+/* Etapa en curso (Activa - Violeta) */
+.phase-step.active {
+  background: #9333ea;
+  border-color: #a855f7;
+  color: #ffffff;
+  box-shadow: 0 8px 24px rgba(147, 51, 234, 0.4);
+}
+
+.phase-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.phase-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.phase-title {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.phase-sub {
+  font-size: 11px;
+  opacity: 0.85;
+}
+
+.phase-desc {
+  font-size: 11px;
+  margin: 10px 0;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.phase-status-footer {
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.phase-status-completed {
+  color: #4ade80;
+}
+
+.phases-chevron {
+  font-size: 18px;
+  color: #9cb4dc;
+  font-weight: 700;
+  opacity: 0.6;
+}
+
+/* ============================================================================
+   COLUMNA DERECHA: Antecedentes y Detalle del Chequeo
+   ============================================================================ */
+.historial-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.history-box-card {
+  background: #1b2746;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  text-align: left;
+}
+
+.history-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.box-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.box-edit-icon {
+  color: #93c5fd;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.box-edit-icon:hover {
+  opacity: 1;
+}
+
+.history-bullets-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-bullet-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: #cbdcf7;
+  line-height: 1.4;
+}
+
+/* Detalle chequeo en columna derecha */
+.checkup-detail-card {
+  background: #1b2746;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  text-align: left;
+}
+
+.detail-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.detail-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.detail-line-icon {
+  color: #93c5fd;
+  margin-top: 1px;
+}
+
+.detail-label {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.detail-val {
+  color: #cbdcf7;
+}
+
+.detail-desc-box {
+  background: rgba(13, 20, 36, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #dbe7f9;
+  margin-top: 6px;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+  .historial-main-grid {
+    grid-template-columns: 1fr;
+  }
+}

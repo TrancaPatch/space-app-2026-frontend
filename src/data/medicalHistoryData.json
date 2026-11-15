@@ -1,0 +1,317 @@
+{
+  "astronautsHistory": {
+    "1": {
+      "id": "1",
+      "name": "Juan Martínez (Ariel Y.)",
+      "code": "D AST-001 - Capitán",
+      "avatar": "/avatars/ariel.jpg",
+      "familyHistory": [
+        "Hipertensión Arterial (Padre).",
+        "Diabetes tipo 2 (Madre)."
+      ],
+      "personalHistory": [
+        "Alergia a la penicilina.",
+        "Asma leve (Controlado).",
+        "Cirugía de apendicitis (2018)."
+      ],
+      "missionPhases": [
+        {
+          "id": "pre",
+          "title": "Antes del viaje",
+          "subtitle": "(Pre-misión)",
+          "icon": "clipboard",
+          "description": "Evaluación inicial y línea base de salud.",
+          "status": "Completado:",
+          "date": "10/11/2026",
+          "state": "completed"
+        },
+        {
+          "id": "during",
+          "title": "Durante el viaje",
+          "subtitle": "(En-misión)",
+          "icon": "rocket",
+          "description": "Monitoreo continuo y registro de cambios",
+          "status": "En curso",
+          "state": "active"
+        },
+        {
+          "id": "post",
+          "title": "Después del viaje",
+          "subtitle": "(Post-misión)",
+          "icon": "heart",
+          "description": "Evaluación de recuperación y efectos a largo plazo",
+          "status": "Pendiente",
+          "state": "pending"
+        }
+      ],
+      "checkups": [
+        {
+          "id": "chk-1",
+          "date": "10/11/2026",
+          "title": "Evaluación diaria (Durante)",
+          "status": "warning",
+          "area": "Pulmones",
+          "description": "Evaluación respiratoria: función pulmonar dentro de rangos esperados. Se reporta mareo leve. Se recomienda observación y reevaluación en 48 horas."
+        },
+        {
+          "id": "chk-2",
+          "date": "15/10/2026",
+          "title": "Control cardiovascular",
+          "status": "nominal",
+          "area": "Sistema Cardiovascular",
+          "description": "Ritmo sinusal regular. Prueba de esfuerzo ortostático superada sin arritmias ni signos de desadaptación cardiovascular."
+        },
+        {
+          "id": "chk-3",
+          "date": "15/10/2026",
+          "title": "Evaluación física",
+          "status": "nominal",
+          "area": "Músculo-esquelético",
+          "description": "Tono muscular conservado. Protocolo ARED (Advanced Resistive Exercise Device) completado al 100% de la carga programada."
+        },
+        {
+          "id": "chk-4",
+          "date": "15/10/2026",
+          "title": "Control pulmonar",
+          "status": "nominal",
+          "area": "Vías Respiratorias",
+          "description": "Espirometría nominal. Capacidad vital forzada (FVC) en 4.8 L. Saturación de oxígeno periférica estable en 99%."
+        },
+        {
+          "id": "chk-5",
+          "date": "15/10/2026",
+          "title": "Evaluación pre-misión (Durante)",
+          "status": "nominal",
+          "area": "Salud General",
+          "description": "Línea base pre-lanzamiento. Aprobación médica de vuelo otorgada por el Comité Quirúrgico Orbital."
+        }
+      ],
+      "comparisonMetrics": {
+        "Peso": {
+          "label": "Peso",
+          "unit": "Kg",
+          "min": 68,
+          "max": 80,
+          "step": 2,
+          "points": [
+            { "label": "Antes\n(14/02/2026)", "value": 75 },
+            { "label": "Antes\n(14/02/2026)", "value": 69.5 },
+            { "label": "Antes\n(14/02/2026)", "value": 72 }
+          ]
+        },
+        "Pulso": {
+          "label": "Frecuencia Cardíaca",
+          "unit": "BPM",
+          "min": 60,
+          "max": 100,
+          "step": 10,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 68 },
+            { "label": "EVA-1\n(15/10/2026)", "value": 84 },
+            { "label": "Actual\n(10/11/2026)", "value": 76 }
+          ]
+        },
+        "Presión": {
+          "label": "Presión Sistólica",
+          "unit": "mmHg",
+          "min": 100,
+          "max": 140,
+          "step": 10,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 116 },
+            { "label": "Durante\n(15/10/2026)", "value": 124 },
+            { "label": "Actual\n(10/11/2026)", "value": 120 }
+          ]
+        },
+        "SpO2": {
+          "label": "Saturación SpO2",
+          "unit": "%",
+          "min": 94,
+          "max": 100,
+          "step": 1,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 99 },
+            { "label": "Durante\n(15/10/2026)", "value": 97 },
+            { "label": "Actual\n(10/11/2026)", "value": 99 }
+          ]
+        }
+      }
+    },
+    "2": {
+      "id": "2",
+      "name": "Manuel J.",
+      "code": "D AST-002 - Tripulante",
+      "avatar": "/avatars/manuel.jpg",
+      "familyHistory": [
+        "Cardiopatía isquémica (Abuelo paterno).",
+        "Dislipidemia familiar."
+      ],
+      "personalHistory": [
+        "Fractura de radio izquierdo consolidada (2015).",
+        "Rinitis alérgica estacional."
+      ],
+      "missionPhases": [
+        {
+          "id": "pre",
+          "title": "Antes del viaje",
+          "subtitle": "(Pre-misión)",
+          "icon": "clipboard",
+          "description": "Evaluación física y densitometría ósea base.",
+          "status": "Completado:",
+          "date": "08/10/2026",
+          "state": "completed"
+        },
+        {
+          "id": "during",
+          "title": "Durante el viaje",
+          "subtitle": "(En-misión)",
+          "icon": "rocket",
+          "description": "Seguimiento de densidad ósea y dolor podal.",
+          "status": "En curso",
+          "state": "active"
+        },
+        {
+          "id": "post",
+          "title": "Después del viaje",
+          "subtitle": "(Post-misión)",
+          "icon": "heart",
+          "description": "Rehabilitación gravitatoria progresiva.",
+          "status": "Pendiente",
+          "state": "pending"
+        }
+      ],
+      "checkups": [
+        {
+          "id": "chk-201",
+          "date": "10/11/2026",
+          "title": "Evaluación podal y ósea",
+          "status": "warning",
+          "area": "Pie Derecho (Falange I)",
+          "description": "Dolor en primer metatarsofalángico. Signos compatibles con microtraumatismo por anclaje de pies en módulo de servicio."
+        },
+        {
+          "id": "chk-202",
+          "date": "15/10/2026",
+          "title": "Control densitometría ósea",
+          "status": "nominal",
+          "area": "Esqueleto / Fémur",
+          "description": "Pérdida ósea del 0.4% en cabeza de fémur dentro del margen esperado para microgravedad prolongada."
+        }
+      ],
+      "comparisonMetrics": {
+        "Peso": {
+          "label": "Peso",
+          "unit": "Kg",
+          "min": 68,
+          "max": 80,
+          "step": 2,
+          "points": [
+            { "label": "Antes\n(14/02/2026)", "value": 76 },
+            { "label": "Durante\n(15/10/2026)", "value": 73 },
+            { "label": "Actual\n(10/11/2026)", "value": 74 }
+          ]
+        },
+        "Pulso": {
+          "label": "Frecuencia Cardíaca",
+          "unit": "BPM",
+          "min": 60,
+          "max": 100,
+          "step": 10,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 70 },
+            { "label": "Durante\n(15/10/2026)", "value": 78 },
+            { "label": "Actual\n(10/11/2026)", "value": 76 }
+          ]
+        }
+      }
+    },
+    "3": {
+      "id": "3",
+      "name": "Ignacio Y.",
+      "code": "D AST-003 - Tripulante",
+      "avatar": "/avatars/ignacio.jpg",
+      "familyHistory": [
+        "Sin antecedentes patológicos relevantes.",
+        "Longevidad familiar notable."
+      ],
+      "personalHistory": [
+        "Intolerancia a la lactosa.",
+        "Miopía corregida con cirugía LASIK (2019)."
+      ],
+      "missionPhases": [
+        {
+          "id": "pre",
+          "title": "Antes del viaje",
+          "subtitle": "(Pre-misión)",
+          "icon": "clipboard",
+          "description": "Evaluación gastrointestinal y metabólica.",
+          "status": "Completado:",
+          "date": "05/10/2026",
+          "state": "completed"
+        },
+        {
+          "id": "during",
+          "title": "Durante el viaje",
+          "subtitle": "(En-misión)",
+          "icon": "rocket",
+          "description": "Monitoreo de adaptación dietética espacial.",
+          "status": "En curso",
+          "state": "active"
+        },
+        {
+          "id": "post",
+          "title": "Después del viaje",
+          "subtitle": "(Post-misión)",
+          "icon": "heart",
+          "description": "Microbioma post-vuelo y recuperación.",
+          "status": "Pendiente",
+          "state": "pending"
+        }
+      ],
+      "checkups": [
+        {
+          "id": "chk-301",
+          "date": "09/11/2026",
+          "title": "Evaluación gastrointestinal",
+          "status": "warning",
+          "area": "Aparato Digestivo",
+          "description": "Epigastralgia leve post-ingesta de ración espacial MRE-4. Se administró antiácido con buena respuesta clínica."
+        },
+        {
+          "id": "chk-302",
+          "date": "15/10/2026",
+          "title": "Control oximetría y perfusión",
+          "status": "nominal",
+          "area": "Sistema Respiratorio",
+          "description": "Oximetría transitoria en 95% recuperada a 98% tras ajuste de flujo en soporte vital ECLSS."
+        }
+      ],
+      "comparisonMetrics": {
+        "Peso": {
+          "label": "Peso",
+          "unit": "Kg",
+          "min": 68,
+          "max": 80,
+          "step": 2,
+          "points": [
+            { "label": "Antes\n(14/02/2026)", "value": 75 },
+            { "label": "Durante\n(15/10/2026)", "value": 73.5 },
+            { "label": "Actual\n(10/11/2026)", "value": 74 }
+          ]
+        },
+        "Pulso": {
+          "label": "Frecuencia Cardíaca",
+          "unit": "BPM",
+          "min": 60,
+          "max": 100,
+          "step": 10,
+          "points": [
+            { "label": "Pre-vuelo\n(14/02/2026)", "value": 72 },
+            { "label": "Durante\n(15/10/2026)", "value": 80 },
+            { "label": "Actual\n(10/11/2026)", "value": 76 }
+          ]
+        }
+      }
+    }
+  }
+}
