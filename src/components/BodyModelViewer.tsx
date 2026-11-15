@@ -25,12 +25,28 @@ import {
   type CardiovascularPartConfig,
   type CardiovascularPartId,
 } from './cardiovascularPartsConfig';
+import {
+  NERVOUS_PARTS_CONFIG,
+  DEFAULT_NERVOUS_VIEW,
+  NERVOUS_BASE_COLOR,
+  NERVOUS_HIGHLIGHT_COLOR,
+  type NervousPartConfig,
+  type NervousPartId,
+} from './nervousPartsConfig';
+import {
+  ORGANS_PARTS_CONFIG,
+  DEFAULT_ORGANS_VIEW,
+  ORGANS_BASE_COLOR,
+  ORGANS_HIGHLIGHT_COLOR,
+  type OrganPartConfig,
+  type OrganPartId,
+} from './organsPartsConfig';
 import '../styles/BodyModelViewer.css';
 
 /**
  * Modelos disponibles en el visor
  */
-export type ModelMode = 'cuerpo-holografico' | 'esqueleto' | 'cardiovascular' | 'nervioso';
+export type ModelMode = 'cuerpo-holografico' | 'esqueleto' | 'cardiovascular' | 'nervioso' | 'organos';
 
 /**
  * Estilos holográficos refinados: Volumétricos, mayor densidad/opacidad y uniones interiores ocultas
@@ -167,16 +183,22 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
   const bodyViewerRef = useRef<ModelViewerElement | null>(null);
   const skeletonViewerRef = useRef<ModelViewerElement | null>(null);
   const cardioViewerRef = useRef<ModelViewerElement | null>(null);
+  const nervousViewerRef = useRef<ModelViewerElement | null>(null);
+  const organsViewerRef = useRef<ModelViewerElement | null>(null);
 
   const [selectedModel, setSelectedModel] = useState<ModelMode>('cuerpo-holografico');
   const [selectedPart, setSelectedPart] = useState<BodyPartConfig | null>(null);
   const [selectedSkeletonPart, setSelectedSkeletonPart] = useState<SkeletonPartConfig | null>(null);
   const [selectedCardioPart, setSelectedCardioPart] = useState<CardiovascularPartConfig | null>(null);
+  const [selectedNervousPart, setSelectedNervousPart] = useState<NervousPartConfig | null>(null);
+  const [selectedOrganPart, setSelectedOrganPart] = useState<OrganPartConfig | null>(null);
 
   // Estados de preparación para evitar parpadeo o renderizado de material sin compilar
   const [isHoloReady, setIsHoloReady] = useState(false);
   const [isSkeletonReady, setIsSkeletonReady] = useState(false);
   const [isCardioReady, setIsCardioReady] = useState(false);
+  const [isNervousReady, setIsNervousReady] = useState(false);
+  const [isOrgansReady, setIsOrgansReady] = useState(false);
 
   // ============================================================================
   // LÓGICA DEL CUERPO HOLOGRÁFICO (100% INTACTA)
@@ -286,6 +308,68 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
   }, []);
 
   // ============================================================================
+  // LÓGICA DEL SISTEMA NERVIOSO (COLOR VIOLETA EN REPOSO Y AMARILLO AL SELECCIONAR)
+  // ============================================================================
+
+  /**
+   * Aplica el color violeta neural (#9C27B0) en reposo a todas las estructuras del sistema nervioso
+   */
+  const applyNervousRestingState = useCallback(() => {
+    const model = nervousViewerRef.current?.model;
+    if (!model) return;
+    const nervousRgba: RGBA = hexToRgba(NERVOUS_BASE_COLOR);
+    model.materials.forEach((mat) => {
+      mat.pbrMetallicRoughness.setBaseColorFactor(nervousRgba);
+    });
+  }, []);
+
+  /**
+   * Pinta una estructura neural específica (por defecto amarillo dorado #FFD700)
+   */
+  const paintNervousPart = useCallback((
+    partId: NervousPartId,
+    colorHexOrRgba: string | RGBA = NERVOUS_HIGHLIGHT_COLOR,
+  ) => {
+    const model = nervousViewerRef.current?.model;
+    if (!model) return;
+    const mat = model.getMaterialByName(partId);
+    if (!mat) return;
+    const rgba: RGBA = typeof colorHexOrRgba === 'string' ? hexToRgba(colorHexOrRgba) : colorHexOrRgba;
+    mat.pbrMetallicRoughness.setBaseColorFactor(rgba);
+  }, []);
+
+  // ============================================================================
+  // LÓGICA DE LOS ÓRGANOS INTERNOS (COLOR TERRACOTA EN REPOSO Y AMARILLO AL SELECCIONAR)
+  // ============================================================================
+
+  /**
+   * Aplica el color terracota/ámbar (#E65100) en reposo a todos los órganos internos
+   */
+  const applyOrgansRestingState = useCallback(() => {
+    const model = organsViewerRef.current?.model;
+    if (!model) return;
+    const organsRgba: RGBA = hexToRgba(ORGANS_BASE_COLOR);
+    model.materials.forEach((mat) => {
+      mat.pbrMetallicRoughness.setBaseColorFactor(organsRgba);
+    });
+  }, []);
+
+  /**
+   * Pinta un órgano específico (por defecto amarillo dorado #FFD700)
+   */
+  const paintOrganPart = useCallback((
+    partId: OrganPartId,
+    colorHexOrRgba: string | RGBA = ORGANS_HIGHLIGHT_COLOR,
+  ) => {
+    const model = organsViewerRef.current?.model;
+    if (!model) return;
+    const mat = model.getMaterialByName(partId);
+    if (!mat) return;
+    const rgba: RGBA = typeof colorHexOrRgba === 'string' ? hexToRgba(colorHexOrRgba) : colorHexOrRgba;
+    mat.pbrMetallicRoughness.setBaseColorFactor(rgba);
+  }, []);
+
+  // ============================================================================
   // RESTABLECER CÁMARA SEGÚN EL MODELO ACTIVO
   // ============================================================================
 
@@ -317,21 +401,42 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
       viewer.fieldOfView = DEFAULT_CARDIOVASCULAR_VIEW.fieldOfView;
       applyCardiovascularRestingState();
       setSelectedCardioPart(null);
+    } else if (selectedModel === 'nervioso') {
+      const viewer = nervousViewerRef.current;
+      if (!viewer) return;
+      viewer.cameraTarget = DEFAULT_NERVOUS_VIEW.cameraTarget;
+      viewer.cameraOrbit = DEFAULT_NERVOUS_VIEW.cameraOrbit;
+      viewer.fieldOfView = DEFAULT_NERVOUS_VIEW.fieldOfView;
+      applyNervousRestingState();
+      setSelectedNervousPart(null);
+    } else if (selectedModel === 'organos') {
+      const viewer = organsViewerRef.current;
+      if (!viewer) return;
+      viewer.cameraTarget = DEFAULT_ORGANS_VIEW.cameraTarget;
+      viewer.cameraOrbit = DEFAULT_ORGANS_VIEW.cameraOrbit;
+      viewer.fieldOfView = DEFAULT_ORGANS_VIEW.fieldOfView;
+      applyOrgansRestingState();
+      setSelectedOrganPart(null);
     }
-  }, [selectedModel, applyHolographicRestingState, applySkeletonRestingState, applyCardiovascularRestingState]);
+  }, [
+    selectedModel,
+    applyHolographicRestingState,
+    applySkeletonRestingState,
+    applyCardiovascularRestingState,
+    applyNervousRestingState,
+    applyOrgansRestingState,
+  ]);
 
   /**
    * Cambia el modelo 3D activo desde el selector desplegable
    */
   const handleModelChange = (newModel: ModelMode) => {
-    if (newModel === 'nervioso') {
-      alert('El Sistema Nervioso se implementará en el siguiente paso.');
-      return;
-    }
     setSelectedModel(newModel);
     setSelectedPart(null);
     setSelectedSkeletonPart(null);
     setSelectedCardioPart(null);
+    setSelectedNervousPart(null);
+    setSelectedOrganPart(null);
 
     if (newModel === 'cuerpo-holografico') {
       const viewer = bodyViewerRef.current;
@@ -356,6 +461,22 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
         viewer.cameraOrbit = DEFAULT_CARDIOVASCULAR_VIEW.cameraOrbit;
         viewer.fieldOfView = DEFAULT_CARDIOVASCULAR_VIEW.fieldOfView;
         applyCardiovascularRestingState();
+      }
+    } else if (newModel === 'nervioso') {
+      const viewer = nervousViewerRef.current;
+      if (viewer) {
+        viewer.cameraTarget = DEFAULT_NERVOUS_VIEW.cameraTarget;
+        viewer.cameraOrbit = DEFAULT_NERVOUS_VIEW.cameraOrbit;
+        viewer.fieldOfView = DEFAULT_NERVOUS_VIEW.fieldOfView;
+        applyNervousRestingState();
+      }
+    } else if (newModel === 'organos') {
+      const viewer = organsViewerRef.current;
+      if (viewer) {
+        viewer.cameraTarget = DEFAULT_ORGANS_VIEW.cameraTarget;
+        viewer.cameraOrbit = DEFAULT_ORGANS_VIEW.cameraOrbit;
+        viewer.fieldOfView = DEFAULT_ORGANS_VIEW.fieldOfView;
+        applyOrgansRestingState();
       }
     }
   };
@@ -578,6 +699,150 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
     };
   }, [applyCardiovascularRestingState, paintCardiovascularPart, resetCamera]);
 
+  // ============================================================================
+  // EVENTOS Y CICLO DE VIDA: SISTEMA NERVIOSO
+  // ============================================================================
+  useEffect(() => {
+    const viewer = nervousViewerRef.current;
+    if (!viewer) return;
+
+    const handleLoad = () => {
+      applyNervousRestingState();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsNervousReady(true);
+        });
+      });
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      if (!viewer.model) return;
+
+      // 1. Restaurar color violeta a todas las partes
+      applyNervousRestingState();
+
+      // 2. Detectar qué estructura neural fue tocada mediante raycast
+      const material = viewer.materialFromPoint(event.clientX, event.clientY);
+      if (!material) {
+        resetCamera();
+        return;
+      }
+
+      const partId = material.name as NervousPartId;
+      const partConfig = NERVOUS_PARTS_CONFIG[partId];
+      if (!partConfig) {
+        setSelectedNervousPart(null);
+        return;
+      }
+
+      // 3. Resaltar la parte seleccionada en Amarillo
+      paintNervousPart(partId, NERVOUS_HIGHLIGHT_COLOR);
+      setSelectedNervousPart(partConfig);
+
+      // 4. Enfocar automáticamente la cámara hacia la estructura seleccionada
+      viewer.cameraTarget = partConfig.cameraTarget;
+      if (partConfig.cameraOrbit) {
+        viewer.cameraOrbit = partConfig.cameraOrbit;
+      }
+      if (partConfig.fieldOfView) {
+        viewer.fieldOfView = partConfig.fieldOfView;
+      }
+
+      // 5. Ejecutar la acción personalizada configurada
+      partConfig.onClick({
+        id: partId,
+        config: partConfig,
+        setPartColor: (customColor) => {
+          paintNervousPart(partId, customColor);
+        },
+      });
+    };
+
+    viewer.addEventListener('load', handleLoad);
+    viewer.addEventListener('click', handleClick);
+
+    if (viewer.model) {
+      handleLoad();
+    }
+
+    return () => {
+      viewer.removeEventListener('load', handleLoad);
+      viewer.removeEventListener('click', handleClick);
+    };
+  }, [applyNervousRestingState, paintNervousPart, resetCamera]);
+
+  // ============================================================================
+  // EVENTOS Y CICLO DE VIDA: ÓRGANOS INTERNOS
+  // ============================================================================
+  useEffect(() => {
+    const viewer = organsViewerRef.current;
+    if (!viewer) return;
+
+    const handleLoad = () => {
+      applyOrgansRestingState();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsOrgansReady(true);
+        });
+      });
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      if (!viewer.model) return;
+
+      // 1. Restaurar color terracota a todos los órganos
+      applyOrgansRestingState();
+
+      // 2. Detectar qué órgano fue tocado mediante raycast
+      const material = viewer.materialFromPoint(event.clientX, event.clientY);
+      if (!material) {
+        resetCamera();
+        return;
+      }
+
+      const partId = material.name as OrganPartId;
+      const partConfig = ORGANS_PARTS_CONFIG[partId];
+      if (!partConfig) {
+        setSelectedOrganPart(null);
+        return;
+      }
+
+      // 3. Resaltar la parte seleccionada en Amarillo
+      paintOrganPart(partId, ORGANS_HIGHLIGHT_COLOR);
+      setSelectedOrganPart(partConfig);
+
+      // 4. Enfocar automáticamente la cámara hacia el órgano seleccionado
+      viewer.cameraTarget = partConfig.cameraTarget;
+      if (partConfig.cameraOrbit) {
+        viewer.cameraOrbit = partConfig.cameraOrbit;
+      }
+      if (partConfig.fieldOfView) {
+        viewer.fieldOfView = partConfig.fieldOfView;
+      }
+
+      // 5. Ejecutar la acción personalizada configurada
+      partConfig.onClick({
+        id: partId,
+        config: partConfig,
+        setPartColor: (customColor) => {
+          paintOrganPart(partId, customColor);
+        },
+      });
+    };
+
+    viewer.addEventListener('load', handleLoad);
+    viewer.addEventListener('click', handleClick);
+
+    if (viewer.model) {
+      handleLoad();
+    }
+
+    return () => {
+      viewer.removeEventListener('load', handleLoad);
+      viewer.removeEventListener('click', handleClick);
+    };
+  }, [applyOrgansRestingState, paintOrganPart, resetCamera]);
+
   return (
     <div className="viewer-container">
       {/* Controles en la parte superior derecha: Dropdown de modelos y Botón de vista general */}
@@ -591,7 +856,8 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
           <option value="cuerpo-holografico">🧍 Cuerpo Holográfico</option>
           <option value="esqueleto">💀 Esqueleto (135 Huesos)</option>
           <option value="cardiovascular">🫀 Sistema Cardiovascular (33 Vasos)</option>
-          <option value="nervioso" disabled>🧠 Nervioso (Paso sig.)</option>
+          <option value="nervioso">🧠 Sistema Nervioso Central (5 Estructuras)</option>
+          <option value="organos">🫁 Órganos Internos (4 Sistemas)</option>
         </select>
 
         <button
@@ -636,6 +902,36 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
           <code className="part-info-id">Estructura: {selectedCardioPart.id}</code>
           <span className="part-info-coords">
             Target: <code>{selectedCardioPart.cameraTarget}</code>
+          </span>
+        </div>
+      )}
+
+      {/* Panel informativo del sistema nervioso seleccionado */}
+      {selectedModel === 'nervioso' && selectedNervousPart && (
+        <div className="part-info-card">
+          <span className="part-info-region">{selectedNervousPart.region}</span>
+          <strong className="part-info-title">{selectedNervousPart.label}</strong>
+          <code className="part-info-id">Estructura: {selectedNervousPart.id}</code>
+          <p style={{ margin: '6px 0 2px', fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
+            {selectedNervousPart.description}
+          </p>
+          <span className="part-info-coords">
+            Target: <code>{selectedNervousPart.cameraTarget}</code>
+          </span>
+        </div>
+      )}
+
+      {/* Panel informativo de órganos internos seleccionado */}
+      {selectedModel === 'organos' && selectedOrganPart && (
+        <div className="part-info-card">
+          <span className="part-info-region">{selectedOrganPart.region}</span>
+          <strong className="part-info-title">{selectedOrganPart.label}</strong>
+          <code className="part-info-id">Órgano: {selectedOrganPart.id}</code>
+          <p style={{ margin: '6px 0 2px', fontSize: '11px', color: '#cbd5e1', lineHeight: '1.4' }}>
+            {selectedOrganPart.description}
+          </p>
+          <span className="part-info-coords">
+            Target: <code>{selectedOrganPart.cameraTarget}</code>
           </span>
         </div>
       )}
@@ -689,6 +985,42 @@ export function BodyModelViewer({ astronautId: _astronautId = '1' }: BodyModelVi
           camera-orbit={DEFAULT_CARDIOVASCULAR_VIEW.cameraOrbit}
           camera-target={DEFAULT_CARDIOVASCULAR_VIEW.cameraTarget}
           field-of-view={DEFAULT_CARDIOVASCULAR_VIEW.fieldOfView}
+          shadow-intensity="0"
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
+
+      {/* Visor 3D: Sistema Nervioso */}
+      <div className={`model-viewport ${selectedModel === 'nervioso' && isNervousReady ? 'active' : ''}`}>
+        <model-viewer
+          ref={nervousViewerRef}
+          src="/SisNervioso.glb"
+          alt="Modelo 3D del sistema nervioso interactivo"
+          camera-controls
+          touch-action="pan-y"
+          disable-tap
+          interpolation-decay={200}
+          camera-orbit={DEFAULT_NERVOUS_VIEW.cameraOrbit}
+          camera-target={DEFAULT_NERVOUS_VIEW.cameraTarget}
+          field-of-view={DEFAULT_NERVOUS_VIEW.fieldOfView}
+          shadow-intensity="0"
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
+
+      {/* Visor 3D: Órganos Internos */}
+      <div className={`model-viewport ${selectedModel === 'organos' && isOrgansReady ? 'active' : ''}`}>
+        <model-viewer
+          ref={organsViewerRef}
+          src="/Organos.glb"
+          alt="Modelo 3D de órganos internos interactivo"
+          camera-controls
+          touch-action="pan-y"
+          disable-tap
+          interpolation-decay={200}
+          camera-orbit={DEFAULT_ORGANS_VIEW.cameraOrbit}
+          camera-target={DEFAULT_ORGANS_VIEW.cameraTarget}
+          field-of-view={DEFAULT_ORGANS_VIEW.fieldOfView}
           shadow-intensity="0"
           style={{ width: '100%', height: '100%' }}
         />
