@@ -28,7 +28,6 @@ export function Navbar() {
           to={`/body/${astronautId}`}
           className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
         >
-          <span className="nav-icon">🧍</span>
           <span>Cuerpo 3D</span>
         </NavLink>
 
@@ -36,7 +35,6 @@ export function Navbar() {
           to={`/historial/${astronautId}`}
           className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
         >
-          <span className="nav-icon">📋</span>
           <span>Historial Clínico</span>
         </NavLink>
       </nav>
