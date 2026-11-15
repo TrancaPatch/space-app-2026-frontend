@@ -160,9 +160,9 @@ export function HistorialPage() {
                     <div className={`phase-step ${phase.state === 'active' ? 'active' : ''}`}>
                       <div className="phase-top">
                         <span className="phase-icon">
-                          {phase.icon === 'clipboard' && '📋'}
-                          {phase.icon === 'rocket' && '🚀'}
-                          {phase.icon === 'heart' && '🤍'}
+                          {phase.icon === 'clipboard' && <span className="material-symbols-outlined">lab_profile</span>}
+                          {phase.icon === 'rocket' && <span className="material-symbols-outlined">rocket_launch</span>}
+                          {phase.icon === 'heart' && <span className="material-symbols-outlined">home_health</span>}
                         </span>
                         <div>
                           <div className="phase-title">{phase.title}</div>
@@ -207,7 +207,7 @@ export function HistorialPage() {
                   <span>Antecedentes familiares</span>
                 </div>
                 <span className="box-edit-icon" title="Editar antecedentes familiares">
-                  
+
                 </span>
               </div>
               <ul className="history-bullets-list">
@@ -227,7 +227,7 @@ export function HistorialPage() {
                   <span>Antecedentes personales</span>
                 </div>
                 <span className="box-edit-icon" title="Editar antecedentes personales">
-                  
+
                 </span>
               </div>
               <ul className="history-bullets-list">
