@@ -4,7 +4,7 @@
       "id": "1",
       "name": "Juan Martínez (Ariel Y.)",
       "code": "D AST-001 - Capitán",
-      "avatar": "/avatars/ariel.jpg",
+      "avatar": "/avatars/ariel.png",
       "familyHistory": [
         "Hipertensión Arterial (Padre).",
         "Diabetes tipo 2 (Madre)."
@@ -141,7 +141,7 @@
       "id": "2",
       "name": "Manuel J.",
       "code": "D AST-002 - Tripulante",
-      "avatar": "/avatars/manuel.jpg",
+      "avatar": "/avatars/manuel.png",
       "familyHistory": [
         "Cardiopatía isquémica (Abuelo paterno).",
         "Dislipidemia familiar."
@@ -229,7 +229,7 @@
       "id": "3",
       "name": "Ignacio Y.",
       "code": "D AST-003 - Tripulante",
-      "avatar": "/avatars/ignacio.jpg",
+      "avatar": "/avatars/ignacio.png",
       "familyHistory": [
         "Sin antecedentes patológicos relevantes.",
         "Longevidad familiar notable."

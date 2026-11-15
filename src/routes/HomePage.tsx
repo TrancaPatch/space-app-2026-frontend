@@ -108,6 +108,12 @@ export function HomePage() {
                     src={astronaut.avatar}
                     alt={astronaut.name || astronaut.fullName}
                     className="card-avatar"
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (target.src.endsWith('.jpg')) {
+                        target.src = target.src.replace('.jpg', '.png');
+                      }
+                    }}
                   />
                   <div className="card-names">
                     <h2 className="astronaut-name">{astronaut.name || astronaut.fullName}</h2>

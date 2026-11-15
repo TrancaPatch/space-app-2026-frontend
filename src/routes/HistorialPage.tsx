@@ -142,6 +142,12 @@ export function HistorialPage() {
                 src={history.avatar}
                 alt={history.name}
                 className="mini-avatar-img"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (target.src.endsWith('.jpg')) {
+                    target.src = target.src.replace('.jpg', '.png');
+                  }
+                }}
               />
               <div className="mini-profile-text">
                 <h2 className="mini-profile-name">Astronauta: {history.name}</h2>

@@ -72,6 +72,12 @@ export function Navbar() {
           src={astronaut.avatar || defaultAstro.avatar}
           alt={astronaut.name || astronaut.fullName}
           className="navbar-avatar-img"
+          onError={(e) => {
+            const target = e.currentTarget;
+            if (target.src.endsWith('.jpg')) {
+              target.src = target.src.replace('.jpg', '.png');
+            }
+          }}
         />
         <div className="astronaut-info">
           <span className="astronaut-name">{astronaut.name || astronaut.fullName}</span>
