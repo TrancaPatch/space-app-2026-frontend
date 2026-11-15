@@ -6,6 +6,25 @@
   background: radial-gradient(circle at center, #1e2230 0%, #0d0f17 100%);
 }
 
+/* Contenedor de vista de modelo 3D con transición suave sin parpadeo de materiales */
+.model-viewport {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.model-viewport.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 /* Contenedor de controles superior derecho (Dropdown de sistemas y botón de reset) */
 .top-right-controls {
   position: absolute;

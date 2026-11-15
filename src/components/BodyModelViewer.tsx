@@ -152,10 +152,16 @@ function applyHologramShader(
 }
 
 export function BodyModelViewer() {
-  const viewerRef = useRef<ModelViewerElement | null>(null);
+  const bodyViewerRef = useRef<ModelViewerElement | null>(null);
+  const skeletonViewerRef = useRef<ModelViewerElement | null>(null);
+
   const [selectedModel, setSelectedModel] = useState<ModelMode>('cuerpo-holografico');
   const [selectedPart, setSelectedPart] = useState<BodyPartConfig | null>(null);
   const [selectedSkeletonPart, setSelectedSkeletonPart] = useState<SkeletonPartConfig | null>(null);
+
+  // Estados de preparación para evitar parpadeo o renderizado de material sin compilar
+  const [isHoloReady, setIsHoloReady] = useState(false);
+  const [isSkeletonReady, setIsSkeletonReady] = useState(false);
 
   // ============================================================================
   // LÓGICA DEL CUERPO HOLOGRÁFICO (100% INTACTA)
@@ -168,7 +174,7 @@ export function BodyModelViewer() {
     partId: BodyPartId,
     mode: 'nominal' | 'selected' | 'critical' | RGBA = 'nominal',
   ) => {
-    const model = viewerRef.current?.model;
+    const model = bodyViewerRef.current?.model;
     if (!model) return;
 
     const material = model.getMaterialByName(partId);
@@ -210,7 +216,7 @@ export function BodyModelViewer() {
    * Aplica el color hueso natural (#EFECE6) en reposo a todos los huesos del esqueleto
    */
   const applySkeletonRestingState = useCallback(() => {
-    const model = viewerRef.current?.model;
+    const model = skeletonViewerRef.current?.model;
     if (!model) return;
     const boneRgba: RGBA = hexToRgba(SKELETON_BONE_COLOR);
     model.materials.forEach((mat) => {
@@ -225,7 +231,7 @@ export function BodyModelViewer() {
     boneId: SkeletonPartId,
     colorHexOrRgba: string | RGBA = SKELETON_HIGHLIGHT_COLOR,
   ) => {
-    const model = viewerRef.current?.model;
+    const model = skeletonViewerRef.current?.model;
     if (!model) return;
     const mat = model.getMaterialByName(boneId);
     if (!mat) return;
@@ -241,16 +247,17 @@ export function BodyModelViewer() {
    * Restablece la cámara a la vista general correspondiente y restaura el estado en reposo
    */
   const resetCamera = useCallback(() => {
-    const viewer = viewerRef.current;
-    if (!viewer) return;
-
     if (selectedModel === 'cuerpo-holografico') {
+      const viewer = bodyViewerRef.current;
+      if (!viewer) return;
       viewer.cameraTarget = DEFAULT_FULL_BODY_VIEW.cameraTarget;
       viewer.cameraOrbit = DEFAULT_FULL_BODY_VIEW.cameraOrbit;
       viewer.fieldOfView = DEFAULT_FULL_BODY_VIEW.fieldOfView;
       applyHolographicRestingState();
       setSelectedPart(null);
     } else if (selectedModel === 'esqueleto') {
+      const viewer = skeletonViewerRef.current;
+      if (!viewer) return;
       viewer.cameraTarget = DEFAULT_SKELETON_VIEW.cameraTarget;
       viewer.cameraOrbit = DEFAULT_SKELETON_VIEW.cameraOrbit;
       viewer.fieldOfView = DEFAULT_SKELETON_VIEW.fieldOfView;
@@ -271,118 +278,84 @@ export function BodyModelViewer() {
     setSelectedPart(null);
     setSelectedSkeletonPart(null);
 
-    const viewer = viewerRef.current;
-    if (!viewer) return;
-
     if (newModel === 'cuerpo-holografico') {
-      viewer.cameraTarget = DEFAULT_FULL_BODY_VIEW.cameraTarget;
-      viewer.cameraOrbit = DEFAULT_FULL_BODY_VIEW.cameraOrbit;
-      viewer.fieldOfView = DEFAULT_FULL_BODY_VIEW.fieldOfView;
+      const viewer = bodyViewerRef.current;
+      if (viewer) {
+        viewer.cameraTarget = DEFAULT_FULL_BODY_VIEW.cameraTarget;
+        viewer.cameraOrbit = DEFAULT_FULL_BODY_VIEW.cameraOrbit;
+        viewer.fieldOfView = DEFAULT_FULL_BODY_VIEW.fieldOfView;
+        applyHolographicRestingState();
+      }
     } else if (newModel === 'esqueleto') {
-      viewer.cameraTarget = DEFAULT_SKELETON_VIEW.cameraTarget;
-      viewer.cameraOrbit = DEFAULT_SKELETON_VIEW.cameraOrbit;
-      viewer.fieldOfView = DEFAULT_SKELETON_VIEW.fieldOfView;
+      const viewer = skeletonViewerRef.current;
+      if (viewer) {
+        viewer.cameraTarget = DEFAULT_SKELETON_VIEW.cameraTarget;
+        viewer.cameraOrbit = DEFAULT_SKELETON_VIEW.cameraOrbit;
+        viewer.fieldOfView = DEFAULT_SKELETON_VIEW.fieldOfView;
+        applySkeletonRestingState();
+      }
     }
   };
 
-  // Manejo de carga inicial y eventos de clic
+  // ============================================================================
+  // EVENTOS Y CICLO DE VIDA: CUERPO HOLOGRÁFICO
+  // ============================================================================
   useEffect(() => {
-    const viewer = viewerRef.current;
+    const viewer = bodyViewerRef.current;
     if (!viewer) return;
 
     const handleLoad = () => {
-      if (selectedModel === 'cuerpo-holografico') {
-        applyHolographicRestingState();
-      } else if (selectedModel === 'esqueleto') {
-        applySkeletonRestingState();
-      }
+      applyHolographicRestingState();
+      // Esperar a que Three.js compile los shaders y renderice el frame holográfico antes de mostrarlo
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsHoloReady(true);
+        });
+      });
     };
 
     const handleClick = (event: MouseEvent) => {
       if (!viewer.model) return;
 
-      if (selectedModel === 'cuerpo-holografico') {
-        // 1. Restaurar el estado de holograma en reposo
-        applyHolographicRestingState();
+      // 1. Restaurar el estado de holograma en reposo
+      applyHolographicRestingState();
 
-        // 2. Detectar qué parte del cuerpo fue tocada mediante raycast
-        const material = viewer.materialFromPoint(event.clientX, event.clientY);
-        if (!material) {
-          // Clic en el fondo vacío: restablece la vista general
-          resetCamera();
-          return;
-        }
-
-        const partId = material.name as BodyPartId;
-        const partConfig = BODY_PARTS_CONFIG[partId];
-        if (!partConfig) {
-          setSelectedPart(null);
-          return;
-        }
-
-        // 3. Resaltar la parte seleccionada en Dorado Holográfico
-        paintBodyPart(partId, 'selected');
-        setSelectedPart(partConfig);
-
-        // 4. Enfocar automáticamente la cámara hacia la parte del cuerpo seleccionada
-        viewer.cameraTarget = partConfig.cameraTarget;
-        if (partConfig.cameraOrbit) {
-          viewer.cameraOrbit = partConfig.cameraOrbit;
-        }
-        if (partConfig.fieldOfView) {
-          viewer.fieldOfView = partConfig.fieldOfView;
-        }
-
-        // 5. Ejecutar la acción personalizada configurada para esta parte
-        partConfig.onClick({
-          id: partId,
-          config: partConfig,
-          setPartColor: (customColor) => {
-            const rgba = typeof customColor === 'string' ? hexToRgba(customColor) : customColor;
-            paintBodyPart(partId, rgba);
-          },
-        });
-      } else if (selectedModel === 'esqueleto') {
-        // 1. Restaurar color hueso a todos los huesos
-        applySkeletonRestingState();
-
-        // 2. Detectar qué hueso fue tocado mediante raycast
-        const material = viewer.materialFromPoint(event.clientX, event.clientY);
-        if (!material) {
-          // Clic en el fondo vacío: restablece la vista general del esqueleto
-          resetCamera();
-          return;
-        }
-
-        const boneId = material.name as SkeletonPartId;
-        const boneConfig = SKELETON_PARTS_CONFIG[boneId];
-        if (!boneConfig) {
-          setSelectedSkeletonPart(null);
-          return;
-        }
-
-        // 3. Resaltar el hueso seleccionado en Amarillo
-        paintSkeletonBone(boneId, SKELETON_HIGHLIGHT_COLOR);
-        setSelectedSkeletonPart(boneConfig);
-
-        // 4. Enfocar automáticamente la cámara hacia el hueso seleccionado
-        viewer.cameraTarget = boneConfig.cameraTarget;
-        if (boneConfig.cameraOrbit) {
-          viewer.cameraOrbit = boneConfig.cameraOrbit;
-        }
-        if (boneConfig.fieldOfView) {
-          viewer.fieldOfView = boneConfig.fieldOfView;
-        }
-
-        // 5. Ejecutar la acción personalizada configurada para este hueso
-        boneConfig.onClick({
-          id: boneId,
-          config: boneConfig,
-          setPartColor: (customColor) => {
-            paintSkeletonBone(boneId, customColor);
-          },
-        });
+      // 2. Detectar qué parte del cuerpo fue tocada mediante raycast
+      const material = viewer.materialFromPoint(event.clientX, event.clientY);
+      if (!material) {
+        resetCamera();
+        return;
       }
+
+      const partId = material.name as BodyPartId;
+      const partConfig = BODY_PARTS_CONFIG[partId];
+      if (!partConfig) {
+        setSelectedPart(null);
+        return;
+      }
+
+      // 3. Resaltar la parte seleccionada en Dorado Holográfico
+      paintBodyPart(partId, 'selected');
+      setSelectedPart(partConfig);
+
+      // 4. Enfocar automáticamente la cámara hacia la parte del cuerpo seleccionada
+      viewer.cameraTarget = partConfig.cameraTarget;
+      if (partConfig.cameraOrbit) {
+        viewer.cameraOrbit = partConfig.cameraOrbit;
+      }
+      if (partConfig.fieldOfView) {
+        viewer.fieldOfView = partConfig.fieldOfView;
+      }
+
+      // 5. Ejecutar la acción personalizada configurada para esta parte
+      partConfig.onClick({
+        id: partId,
+        config: partConfig,
+        setPartColor: (customColor) => {
+          const rgba = typeof customColor === 'string' ? hexToRgba(customColor) : customColor;
+          paintBodyPart(partId, rgba);
+        },
+      });
     };
 
     viewer.addEventListener('load', handleLoad);
@@ -396,17 +369,79 @@ export function BodyModelViewer() {
       viewer.removeEventListener('load', handleLoad);
       viewer.removeEventListener('click', handleClick);
     };
-  }, [
-    selectedModel,
-    applyHolographicRestingState,
-    applySkeletonRestingState,
-    paintBodyPart,
-    paintSkeletonBone,
-    resetCamera,
-  ]);
+  }, [applyHolographicRestingState, paintBodyPart, resetCamera]);
 
-  const currentSrc = selectedModel === 'esqueleto' ? '/Esqueleto.glb' : '/CuerpoSeparado-1.glb';
-  const defaultView = selectedModel === 'esqueleto' ? DEFAULT_SKELETON_VIEW : DEFAULT_FULL_BODY_VIEW;
+  // ============================================================================
+  // EVENTOS Y CICLO DE VIDA: ESQUELETO
+  // ============================================================================
+  useEffect(() => {
+    const viewer = skeletonViewerRef.current;
+    if (!viewer) return;
+
+    const handleLoad = () => {
+      applySkeletonRestingState();
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsSkeletonReady(true);
+        });
+      });
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      if (!viewer.model) return;
+
+      // 1. Restaurar color hueso a todos los huesos
+      applySkeletonRestingState();
+
+      // 2. Detectar qué hueso fue tocado mediante raycast
+      const material = viewer.materialFromPoint(event.clientX, event.clientY);
+      if (!material) {
+        resetCamera();
+        return;
+      }
+
+      const boneId = material.name as SkeletonPartId;
+      const boneConfig = SKELETON_PARTS_CONFIG[boneId];
+      if (!boneConfig) {
+        setSelectedSkeletonPart(null);
+        return;
+      }
+
+      // 3. Resaltar el hueso seleccionado en Amarillo
+      paintSkeletonBone(boneId, SKELETON_HIGHLIGHT_COLOR);
+      setSelectedSkeletonPart(boneConfig);
+
+      // 4. Enfocar automáticamente la cámara hacia el hueso seleccionado
+      viewer.cameraTarget = boneConfig.cameraTarget;
+      if (boneConfig.cameraOrbit) {
+        viewer.cameraOrbit = boneConfig.cameraOrbit;
+      }
+      if (boneConfig.fieldOfView) {
+        viewer.fieldOfView = boneConfig.fieldOfView;
+      }
+
+      // 5. Ejecutar la acción personalizada configurada para este hueso
+      boneConfig.onClick({
+        id: boneId,
+        config: boneConfig,
+        setPartColor: (customColor) => {
+          paintSkeletonBone(boneId, customColor);
+        },
+      });
+    };
+
+    viewer.addEventListener('load', handleLoad);
+    viewer.addEventListener('click', handleClick);
+
+    if (viewer.model) {
+      handleLoad();
+    }
+
+    return () => {
+      viewer.removeEventListener('load', handleLoad);
+      viewer.removeEventListener('click', handleClick);
+    };
+  }, [applySkeletonRestingState, paintSkeletonBone, resetCamera]);
 
   return (
     <div className="viewer-container">
@@ -458,22 +493,41 @@ export function BodyModelViewer() {
         </div>
       )}
 
-      {/* Visor 3D interactivo con interpolación suave de cámara */}
-      <model-viewer
-        key={selectedModel}
-        ref={viewerRef}
-        src={currentSrc}
-        alt={selectedModel === 'esqueleto' ? 'Modelo 3D del esqueleto humano interactivo' : 'Modelo 3D del cuerpo humano interactivo'}
-        camera-controls
-        touch-action="pan-y"
-        disable-tap
-        interpolation-decay={200}
-        camera-orbit={defaultView.cameraOrbit}
-        camera-target={defaultView.cameraTarget}
-        field-of-view={defaultView.fieldOfView}
-        shadow-intensity="0"
-        style={{ width: '100%', height: '100%' }}
-      />
+      {/* Visor 3D: Cuerpo Holográfico (Permanece en memoria GPU con shaders compilados para evitar recarga) */}
+      <div className={`model-viewport ${selectedModel === 'cuerpo-holografico' && isHoloReady ? 'active' : ''}`}>
+        <model-viewer
+          ref={bodyViewerRef}
+          src="/CuerpoSeparado-1.glb"
+          alt="Modelo 3D del cuerpo humano interactivo"
+          camera-controls
+          touch-action="pan-y"
+          disable-tap
+          interpolation-decay={200}
+          camera-orbit={DEFAULT_FULL_BODY_VIEW.cameraOrbit}
+          camera-target={DEFAULT_FULL_BODY_VIEW.cameraTarget}
+          field-of-view={DEFAULT_FULL_BODY_VIEW.fieldOfView}
+          shadow-intensity="0"
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
+
+      {/* Visor 3D: Esqueleto */}
+      <div className={`model-viewport ${selectedModel === 'esqueleto' && isSkeletonReady ? 'active' : ''}`}>
+        <model-viewer
+          ref={skeletonViewerRef}
+          src="/Esqueleto.glb"
+          alt="Modelo 3D del esqueleto humano interactivo"
+          camera-controls
+          touch-action="pan-y"
+          disable-tap
+          interpolation-decay={200}
+          camera-orbit={DEFAULT_SKELETON_VIEW.cameraOrbit}
+          camera-target={DEFAULT_SKELETON_VIEW.cameraTarget}
+          field-of-view={DEFAULT_SKELETON_VIEW.fieldOfView}
+          shadow-intensity="0"
+          style={{ width: '100%', height: '100%' }}
+        />
+      </div>
     </div>
   );
 }
